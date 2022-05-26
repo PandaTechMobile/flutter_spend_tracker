@@ -1,64 +1,24 @@
-import 'package:flutter/material.dart';
-
-import './new_transaction_widget.dart';
-import './transaction_list_widget.dart';
-import '../models/transaction.dart';
-
-class UserTransactions extends StatefulWidget {
-  const UserTransactions({Key? key}) : super(key: key);
-
-  @override
-  State<UserTransactions> createState() => _UserTransactionsState();
-}
-
-class _UserTransactionsState extends State<UserTransactions> {
-  final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now().add(
-        Duration(days: -2),
-      ),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Shirt',
-      amount: 29.99,
-      date: DateTime.now().add(
-        Duration(days: -1),
-      ),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Coffee',
-      amount: 10.99,
-      date: DateTime.now().add(
-        Duration(hours: -1),
-      ),
-    ),
-  ];
-
-  void _addNewTransaction(String title, double amount) {
-    var transaction = Transaction(
-      id: DateTime.now().toString(),
-      title: title,
-      amount: amount,
-      date: DateTime.now(),
-    );
-
-    setState(() {
-      _userTransactions.add(transaction);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        NewTransaction(_addNewTransaction),
-        TransactionList(_userTransactions),
-      ],
-    );
-  }
-}
+// import 'package:flutter/material.dart';
+//
+// import './new_transaction_widget.dart';
+// import './transaction_list_widget.dart';
+// import '../models/transaction.dart';
+//
+// class UserTransactions extends StatefulWidget {
+//   const UserTransactions({Key? key}) : super(key: key);
+//
+//   @override
+//   State<UserTransactions> createState() => _UserTransactionsState();
+// }
+//
+// class _UserTransactionsState extends State<UserTransactions> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         NewTransaction(_addNewTransaction),
+//         TransactionList(_userTransactions),
+//       ],
+//     );
+//   }
+// }

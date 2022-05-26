@@ -27,6 +27,7 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
+              onSubmitted: (_) => _submitAddTransaction(),
               // onChanged: (value) {
               //   newTransactionTitle = value;
               // },
