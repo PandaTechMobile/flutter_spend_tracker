@@ -14,6 +14,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              titleMedium: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Quicksand',
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       home: MyHomePage(),
     );
@@ -29,30 +45,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now().add(
-        Duration(days: -2),
-      ),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Shirt',
-      amount: 29.99,
-      date: DateTime.now().add(
-        Duration(days: -1),
-      ),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Coffee',
-      amount: 10.99,
-      date: DateTime.now().add(
-        Duration(hours: -1),
-      ),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   amount: 69.99,
+    //   date: DateTime.now().add(
+    //     Duration(days: -2),
+    //   ),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'New Shirt',
+    //   amount: 29.99,
+    //   date: DateTime.now().add(
+    //     Duration(days: -1),
+    //   ),
+    // ),
+    // Transaction(
+    //   id: 't3',
+    //   title: 'Coffee',
+    //   amount: 10.99,
+    //   date: DateTime.now().add(
+    //     Duration(hours: -1),
+    //   ),
+    // ),
   ];
 
   void _showAddNewTransaction(BuildContext ctx) {
@@ -84,7 +100,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense Tracker'),
+        title: Text(
+          'Expense Tracker',
+        ),
         actions: [
           IconButton(
             onPressed: () => _showAddNewTransaction(context),
