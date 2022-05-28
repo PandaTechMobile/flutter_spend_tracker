@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './widgets/chart_widget.dart';
 import './widgets/new_transaction_widget.dart';
 import './widgets/transaction_list_widget.dart';
 import 'models/transaction.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Quicksand',
               ),
+              //button: TextStyle(color: Colors.white),
             ),
         appBarTheme: AppBarTheme(
           centerTitle: true,
@@ -45,31 +47,41 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -2),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New Shirt',
-    //   amount: 29.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -1),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'Coffee',
-    //   amount: 10.99,
-    //   date: DateTime.now().add(
-    //     Duration(hours: -1),
-    //   ),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now().add(
+        Duration(days: -2),
+      ),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New Shirt',
+      amount: 29.99,
+      date: DateTime.now().add(
+        Duration(days: -1),
+      ),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Coffee',
+      amount: 10.99,
+      date: DateTime.now().add(
+        Duration(hours: -1),
+      ),
+    ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((txn) {
+      return txn.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _showAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
@@ -83,16 +95,22 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime date) {
     var transaction = Transaction(
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
       _userTransactions.add(transaction);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((txn) => txn.id == id);
     });
   }
 
@@ -115,19 +133,20 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Card(
-              color: Colors.grey,
-              elevation: 5,
-              child: Container(
-                alignment: Alignment.center,
-                height: 200,
-                child: Text(
-                  'CHART!',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            TransactionList(_userTransactions),
+            // Card(
+            //   color: Colors.grey,
+            //   elevation: 5,
+            //   child: Container(
+            //     alignment: Alignment.center,
+            //     height: 200,
+            //     child: Text(
+            //       'CHART!',
+            //       style: TextStyle(color: Colors.white),
+            //     ),
+            //   ),
+            // ),
+            Chart(_recentTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
             // Container(
             //   height: 200,
             //   child: Card(
