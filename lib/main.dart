@@ -55,78 +55,78 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -2),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New Shirt',
-    //   amount: 29.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -1),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'Coffee',
-    //   amount: 10.99,
-    //   date: DateTime.now().add(
-    //     Duration(hours: -1),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -2),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New Shirt',
-    //   amount: 29.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -1),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'Coffee',
-    //   amount: 10.99,
-    //   date: DateTime.now().add(
-    //     Duration(hours: -1),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -2),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New Shirt',
-    //   amount: 29.99,
-    //   date: DateTime.now().add(
-    //     Duration(days: -1),
-    //   ),
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'Coffee',
-    //   amount: 10.99,
-    //   date: DateTime.now().add(
-    //     Duration(hours: -1),
-    //   ),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now().add(
+        Duration(days: -2),
+      ),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New Shirt',
+      amount: 29.99,
+      date: DateTime.now().add(
+        Duration(days: -1),
+      ),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Coffee',
+      amount: 10.99,
+      date: DateTime.now().add(
+        Duration(hours: -1),
+      ),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now().add(
+        Duration(days: -2),
+      ),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New Shirt',
+      amount: 29.99,
+      date: DateTime.now().add(
+        Duration(days: -1),
+      ),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Coffee',
+      amount: 10.99,
+      date: DateTime.now().add(
+        Duration(hours: -1),
+      ),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now().add(
+        Duration(days: -2),
+      ),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New Shirt',
+      amount: 29.99,
+      date: DateTime.now().add(
+        Duration(days: -1),
+      ),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Coffee',
+      amount: 10.99,
+      date: DateTime.now().add(
+        Duration(hours: -1),
+      ),
+    ),
   ];
 
   bool _showChart = false;
@@ -174,8 +174,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final AppBar appBar = AppBar(
-      title: Text(
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final appBar = AppBar(
+      title: const Text(
         'Expense Tracker',
       ),
       actions: [
@@ -184,6 +186,14 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(Icons.add),
         ),
       ],
+    );
+
+    final txnListWidget = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.75,
+      child: TransactionList(_userTransactions, _deleteTransaction),
     );
     return Scaffold(
       appBar: appBar,
@@ -204,35 +214,39 @@ class _MyHomePageState extends State<MyHomePage> {
             //     ),
             //   ),
             // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Show Chart'),
-                Switch(
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    })
-              ],
-            ),
-            _showChart
-                ? Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.75,
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.75,
-                    child:
-                        TransactionList(_userTransactions, _deleteTransaction),
-                  ),
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Show Chart'),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (val) {
+                        setState(() {
+                          _showChart = val;
+                        });
+                      })
+                ],
+              ),
+            if (!isLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.25,
+                child: Chart(_recentTransactions),
+              ),
+            if (!isLandscape) txnListWidget,
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.75,
+                      child: Chart(_recentTransactions),
+                    )
+                  : txnListWidget
             // Container(
             //   height: 200,
             //   child: Card(
