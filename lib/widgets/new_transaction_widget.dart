@@ -46,55 +46,62 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: _titleController,
-              onSubmitted: (_) => _submitAddTransaction(),
-              // onChanged: (value) {
-              //   newTransactionTitle = value;
-              // },
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: _amountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => _submitAddTransaction(),
-              //onChanged: (value) => newTransactionAmount = value,
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(_selectedDate == null
-                        ? 'No Date Chosen!'
-                        : DateFormat.yMd().format(_selectedDate!)),
-                  ),
-                  FlatButton(
-                    onPressed: _presentDatePicker,
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Choose Date',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 16.0,
+            left: 16.0,
+            right: 16.0,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
+          ),
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: _titleController,
+                onSubmitted: (_) => _submitAddTransaction(),
+                // onChanged: (value) {
+                //   newTransactionTitle = value;
+                // },
               ),
-            ),
-            RaisedButton(
-              onPressed: () => _submitAddTransaction(),
-              child: Text('Add Transaction'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-            )
-          ],
-          crossAxisAlignment: CrossAxisAlignment.end,
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: _amountController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => _submitAddTransaction(),
+                //onChanged: (value) => newTransactionAmount = value,
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(_selectedDate == null
+                          ? 'No Date Chosen!'
+                          : DateFormat.yMd().format(_selectedDate!)),
+                    ),
+                    FlatButton(
+                      onPressed: _presentDatePicker,
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Choose Date',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              RaisedButton(
+                onPressed: () => _submitAddTransaction(),
+                child: Text('Add Transaction'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+              )
+            ],
+            crossAxisAlignment: CrossAxisAlignment.end,
+          ),
         ),
       ),
     );
