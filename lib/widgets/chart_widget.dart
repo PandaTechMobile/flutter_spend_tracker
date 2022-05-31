@@ -43,6 +43,7 @@ class Chart extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: groupedTransactionValues.map((data) {
             //return Text('${data['day']}: ${data['amount']}');
             return Flexible(
