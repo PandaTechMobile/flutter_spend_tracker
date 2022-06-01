@@ -55,7 +55,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransactions = [
     Transaction(
       id: 't1',
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     Transaction(
-      id: 't1',
+      id: 't4',
       title: 'New Shoes',
       amount: 69.99,
       date: DateTime.now().add(
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     Transaction(
-      id: 't2',
+      id: 't5',
       title: 'New Shirt',
       amount: 29.99,
       date: DateTime.now().add(
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     Transaction(
-      id: 't3',
+      id: 't6',
       title: 'Coffee',
       amount: 10.99,
       date: DateTime.now().add(
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     Transaction(
-      id: 't1',
+      id: 't7',
       title: 'New Shoes',
       amount: 69.99,
       date: DateTime.now().add(
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     Transaction(
-      id: 't2',
+      id: 't8',
       title: 'New Shirt',
       amount: 29.99,
       date: DateTime.now().add(
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     Transaction(
-      id: 't3',
+      id: 't9',
       title: 'Coffee',
       amount: 10.99,
       date: DateTime.now().add(
@@ -132,6 +132,24 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   bool _showChart = false;
+
+  @override
+  initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+  }
+
+  @override
+  dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
+    super.dispose();
+  }
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((txn) {
