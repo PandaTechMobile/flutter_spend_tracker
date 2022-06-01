@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spend_tracker/widgets/transaction_item.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
@@ -35,43 +36,9 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemCount: _transactions.length,
               itemBuilder: (ctx, index) {
-                return Card(
-                  elevation: 5,
-                  margin: EdgeInsets.all(6),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: FittedBox(
-                          child: Text(
-                              '\$${_transactions[index].amount.toStringAsFixed(2)}'),
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      _transactions[index].title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMMMd().format(_transactions[index].date),
-                    ),
-                    trailing: MediaQuery.of(context).size.width > 460
-                        ? FlatButton.icon(
-                            icon: Icon(Icons.delete),
-                            label: Text('Delete'),
-                            textColor: Colors.red,
-                            onPressed: () =>
-                                _deleteTransaction(_transactions[index].id),
-                          )
-                        : IconButton(
-                            icon: Icon(Icons.delete),
-                            color: Colors.red,
-                            onPressed: () =>
-                                _deleteTransaction(_transactions[index].id),
-                          ),
-                  ),
-                );
+                return TransactionItem(
+                    transaction: _transactions[index],
+                    deleteTransaction: _deleteTransaction);
                 // return Card(
                 //   child: Row(
                 //     children: [

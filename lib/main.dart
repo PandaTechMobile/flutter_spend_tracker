@@ -174,6 +174,55 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(MediaQueryData mediaQuery,
+      ObstructingPreferredSizeWidget appBar, Widget txnListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Show Chart',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Switch.adaptive(
+              activeColor: Theme.of(context).accentColor,
+              value: _showChart,
+              onChanged: (val) {
+                setState(() {
+                  _showChart = val;
+                });
+              })
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.75,
+              child: Chart(_recentTransactions),
+            )
+          : txnListWidget
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(
+    MediaQueryData mediaQuery,
+    ObstructingPreferredSizeWidget appBar,
+    Widget txnListWidget,
+  ) {
+    return [
+      Container(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.25,
+        child: Chart(_recentTransactions),
+      ),
+      txnListWidget
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -224,66 +273,10 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Card(
-            //   color: Colors.grey,
-            //   elevation: 5,
-            //   child: Container(
-            //     alignment: Alignment.center,
-            //     height: 200,
-            //     child: Text(
-            //       'CHART!',
-            //       style: TextStyle(color: Colors.white),
-            //     ),
-            //   ),
-            // ),
             if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Show Chart',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Switch.adaptive(
-                      activeColor: Theme.of(context).accentColor,
-                      value: _showChart,
-                      onChanged: (val) {
-                        setState(() {
-                          _showChart = val;
-                        });
-                      })
-                ],
-              ),
+              ..._buildLandscapeContent(mediaQuery, appBar, txnListWidget),
             if (!isLandscape)
-              Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.25,
-                child: Chart(_recentTransactions),
-              ),
-            if (!isLandscape) txnListWidget,
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.75,
-                      child: Chart(_recentTransactions),
-                    )
-                  : txnListWidget
-            // Container(
-            //   height: 200,
-            //   child: Card(
-            //     color: Colors.grey,
-            //     child: Text(
-            //       'List of Txn!',
-            //       textAlign: TextAlign.center,
-            //       style: TextStyle(color: Colors.white),
-            //     ),
-            //   ),
-            // ),
+              ..._buildPortraitContent(mediaQuery, appBar, txnListWidget),
           ],
         ),
       ),
